@@ -10,8 +10,8 @@
 using namespace std;
 
 int main(){
-	srand(time(0));
-	int populationSize = 100;
+	srand(0);
+	int populationSize = 10;
 	string tgtStr = "Hello World!";
 	//create a vector of individuals.
 	vector<Indiv> indivList;
@@ -31,5 +31,17 @@ int main(){
 		//Sort the list according to fitness.
 		sort(indivList.begin(), indivList.end());
 		cout << indivList[0].genStr << "\t" << indivList[0].fitness<< "\n";
+
+		//Erase half of the population
+		int populationErased = populationSize / 2;
+		indivList.erase(
+						indivList.begin() + populationErased,
+						indivList.end()
+						);
+		//Repopulate the list
+		for (int i = 0; i < populationErased; i ++){
+			Indiv tempIndivPtr(indivList[0], indivList[i]);
+			indivList.push_back(tempIndivPtr);
+		}
 	}
 }

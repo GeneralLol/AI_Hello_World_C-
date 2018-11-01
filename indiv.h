@@ -10,8 +10,8 @@ public:
 	std::string genStr; 	//Generated string.
 	std::vector<std::vector<double>> charPosList; //Create a matrix of possibilities.
 	std::vector<std::vector<double>> prevCharPosList; //Backup for the previous value in case the mutated version is less fit.
-	double fitness; 		//Fitness score for this particular individual. The higher the fitness score is, the smaller this is going to be.
-	double prevFitness;		//Backup for the previous fitness value to decide whether to preserve or discard the mutation.
+	int fitness; 		//Fitness score for this particular individual. The higher the fitness score is, the smaller this is going to be.
+	int prevFitness;		//Backup for the previous fitness value to decide whether to preserve or discard the mutation.
 	unsigned int mutatChance; 		//amount of charPos that is allowed to be changed.
 	unsigned int prevMutatChance; 	//Backup for mutatChance.
 	unsigned int strLength; 		//Allowed length for the generated string.

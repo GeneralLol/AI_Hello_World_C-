@@ -109,14 +109,14 @@ Indiv::Indiv(Indiv& src1, Indiv& src2){
 		charPosList.push_back(tempVector);
 		tempVector.clear();
 	}
-
+	//TODO: Fix the situation where the two charPosLists may not have the same length.
 	for (unsigned int i = 0; i < strLength; i ++){
 		for (int j = 0; j < 96; j ++){
 			paternal = rand() % 2;
 			//If there are no values at [i][j] in one of the sources, set the value to be from the other one.
-			if (src1.strLength < i){
+			if ((src1.strLength-1) < i){
 				paternal = 0;
-			}else if (src2.strLength < i){
+			}else if ((src2.strLength-1) < i){
 				paternal = 1;
 			}
 
@@ -235,7 +235,7 @@ int Indiv::eval(){
 
 	//Go through the overlapping portions of the strings.
 	for (unsigned int i = 0; i < cycleLen; i ++){
-		tempFitness += (tgtStr[i] - genStr[i]) ^ 2;
+		tempFitness += pow((tgtStr[i] - genStr[i]), 2);
 	}
 	//Go through the non-overlapping portions.
 	if (cycleLen == lenTgtStr){
