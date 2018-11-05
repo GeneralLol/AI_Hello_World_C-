@@ -110,20 +110,36 @@ Indiv::Indiv(Indiv& src1, Indiv& src2){
 		tempVector.clear();
 	}
 	//TODO: Fix the situation where the two charPosLists may not have the same length.
-	for (unsigned int i = 0; i < strLength; i ++){
-		for (int j = 0; j < 96; j ++){
-			paternal = rand() % 2;
-			//If there are no values at [i][j] in one of the sources, set the value to be from the other one.
-			if ((src1.strLength-1) < i){
-				paternal = 0;
-			}else if ((src2.strLength-1) < i){
-				paternal = 1;
+	if ((strLength > src1.strLength) | (strLength > src2.strLength)){
+		if (strLength > src1.strLength){
+			for (unsigned int i = 0; i < src1.strLength; i ++){
+				for (int j = 0; j < 96; j ++){
+					paternal = rand() % 2;
+					if (paternal){
+						charPosList[i][j] = src1.charPosList[i][j];
+					}else{
+						charPosList[i][j] = src2.charPosList[i][j];
+					}
+				}
 			}
 
-			if (paternal){
-				charPosList[i][j] = src1.charPosList[i][j];
-			}else{
-				charPosList[i][j] = src2.charPosList[i][j];
+			for (unsigned int i = src1.strLength; i < strLength; i ++){
+				charPosList[i] = src2.charPosList[i];
+			}
+		}else{
+			for (unsigned int i = 0; i < src2.strLength; i ++){
+				for (int j = 0; j < 96; j ++){
+					paternal = rand() % 2;
+					if (paternal){
+						charPosList[i][j] = src1.charPosList[i][j];
+					}else{
+						charPosList[i][j] = src2.charPosList[i][j];
+					}
+				}
+			}
+
+			for (unsigned int i = src2.strLength; i < strLength; i ++){
+				charPosList[i] = src1.charPosList[i];
 			}
 		}
 	}
