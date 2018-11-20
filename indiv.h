@@ -1,37 +1,32 @@
 #include <cstdlib>
 #include <string>
-#include <vector>
-#include <fstream>
 
 class Indiv{
 public:
-	//Attributes
-	std::string tgtStr; 	//Target string.
-	std::string genStr; 	//Generated string.
-	std::vector<std::vector<double>> charPosList; //Create a matrix of possibilities.
-	std::vector<std::vector<double>> prevCharPosList; //Backup for the previous value in case the mutated version is less fit.
-	int fitness; 		//Fitness score for this particular individual. The higher the fitness score is, the smaller this is going to be.
-	int prevFitness;		//Backup for the previous fitness value to decide whether to preserve or discard the mutation.
-	unsigned int mutatChance; 		//amount of charPos that is allowed to be changed.
-	unsigned int prevMutatChance; 	//Backup for mutatChance.
-	unsigned int strLength; 		//Allowed length for the generated string.
-	unsigned int prevStrLength; 	//Backup for strLength.
+	std::string genStr;
+	std::string prevGenStr;
+	std::string tarStr;
 
-	//Methods
-	//Constructors
-	Indiv();						//Default constructor. Do nothing.
-	Indiv(std::string tgtStr);		//Sets the target string to the input string, generates everything according.
-	Indiv(std::fstream& saveFile); 	//Reads info from the save file. Save file setup handled by the main program.
-	Indiv(Indiv& src1, Indiv& src2);	//Creates a cross between src1 and src2.
-	//Mutators
-	int mutate();				//mutate: mutates the current individual. Returns status numbers.
-	int generate();				//generate: generates a sting to be evaluated. Used only in eval, but didn't want to bother making it private.
-	int eval();					//eval: Evaluates and returns the fitness score. Changes fitness value.
-	int end_generation(); 		//Decides whether to keep or discard the mutations.
+	const static int INT_MAX = 2147483647;
+	const static int PRINTABLE_CHAR = 96;
+	const static int SPACE = 32;
 
-	//Operators
-	//void operator = (Indiv& tgt); //Using void here is because there is really no need to have it return anything in the usecase. Also don't want to create new objects when returning.
-	bool operator < (Indiv& tgt); //Defines this operator so sort() can be used.
+	int fitness;
+	int prevFitness;
+	int mutChance;
+	int lenStr;
+
+	Indiv();
+	Indiv(std::string);
+
+	void mutate();
+	void evaluate();
+	void end_generation();
 };
-
-
+/**
+ * Crosses two individuals and puts the result in the resultant individual.
+ * @param indiv1 One of the source individuals
+ * @param indiv2 One of the source individuals
+ * @param rst The resultant individual from the cross that is to be overwritten.
+ */
+void cross(Indiv& indiv1, Indiv& indiv2, Indiv& rst);
