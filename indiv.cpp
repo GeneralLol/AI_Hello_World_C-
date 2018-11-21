@@ -21,6 +21,8 @@ Indiv::Indiv(){
 }
 
 Indiv::Indiv(string tarStr){
+	srand(time(0));
+
 	this->tarStr = tarStr;
 	genStr = " ";
 	prevGenStr = genStr;
